@@ -11,11 +11,13 @@ class UI {
             <img class="img-fluid mb-2" src="${user.avatar_url}">
             <a href="${user.html_url}" target="_blank" class="btn btn-primary btn-block mb-2">View Profile</a>
           </div>
-          <div class="col-md-9">
-          <span class="badges badge-primary">Public Repos:${user.public_repos}</span>
-          <span class="badges badge-secondary">Public Gists${user.publi_gists}</span>
-          <span class="badges badge-success">Followers:${user.followers}</span>
-          <span class="badges badge-info">Following${user.following}</span>
+          <div class="col-md-9 mb-2">
+          <div class="mb-1">
+            <span class="badge badge-primary">Public Repos:${user.public_repos}</span>
+            <span class="badge badge-secondary">Public Gists${user.publi_gists}</span>
+            <span class="badge badge-success">Followers:${user.followers}</span>
+            <span class="badge badge-info">Following${user.following}</span>
+          </div>
           <br>
           <ul class="list-group">
             <li class="list-group-item">Company:${user.company}</li>
@@ -30,6 +32,32 @@ class UI {
     `;
 
   }
+  //Show user repos
+  showRepos(repos) {
+     
+    let output = '' ;
+     repos.forEach((repo) => {
+       output +=`
+       <div class="card card-body mb-2">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="${repo.html_url}" 'target="_blank">${repo.name}</a>
+          </div>
+          <div class="col-md-6">
+            <span class="badge badge-primary">Stars:${repo.stargazers_count}</span>
+            <span class="badge badge-secondary">Watchers${repo.watchers_count}</span>
+            <span class="badgesbadge-success">Forks:${repo.forks_count}</span>
+           </div> 
+          </div>
+        </div>  
+       <div>
+       `
+     });
+
+     //Output repos
+     document.getElementById('repos').innerHTML = output;
+  }
+
   //Clear Alert Messgae
   clearAlert() {
     const currentAlert = document.querySelector('.alert');
@@ -44,6 +72,7 @@ class UI {
   clearProfile() {
      this.profile.innerHTML = '';
    }
+
   // Show alert meeage
    showAlert(message , className) {
     //Clear any remaining alerts
@@ -61,7 +90,9 @@ class UI {
     container.insertBefore(div,search);
 
     //Timeout after 3 sec
-    setTimeout(() =>{ this.clearAlert();}, 3000 );
+    setTimeout(() =>{ 
+      this.clearAlert();
+    }, 3000 );
 
 
    }
